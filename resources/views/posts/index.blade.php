@@ -13,6 +13,7 @@
             <body>
                 <h1>グループ</h1>
                 <a href='/posts/create'>新規作成</a>
+                <br>
                 <div class='posts'>
                     @foreach($posts as $post)
                         <div class='post'>

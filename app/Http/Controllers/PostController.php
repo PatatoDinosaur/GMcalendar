@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models_Message;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -18,22 +19,7 @@ class PostController extends Controller
      */
     public function index(Post $post)//インポートしたPostをインスタンス化して$postとして使用
     {
-        //クライアントインスタンス生成
-        $client = new \GuzzleHttp\Client();
-        
-        $url = 'https://teratail.com/api/v1/questions';
-        
-        $response = $client->request(
-            'GET',
-            $url,
-            ['Bearer' => config('services.teratail.token')]
-        );
-        
-        //API通信で取得したデータはjson形式のため、PHPファイル用に連想配列にデコード
-        $questions = json_decode($response->getBody(), true);
-        
-        return view('posts/index')->with(['posts' => $post->getPaginateByLimit(5), 'questions' => $questions['questions'],]);//$postの中身を戻り値にする
-        //blade内でつ悪変数'posts'と設定。'posts'の中身にgetを使い、インスタンス化した$postを代入
+        return view('posts/index')->with(['posts' => $post->getPaginateByLimit(5)]);
     } 
     //特定IDのpostを表示する
     public function show(Post $post)
@@ -60,6 +46,11 @@ class PostController extends Controller
         return view('posts/edit')->with(['post' => $post]);
     }
     
+    public function chat(Post $post)
+    {
+        return view('posts/chat')->with(['post' => $post]);
+    }
+    
     public function update(Request $request, Post $post)
     {
         $input_post = $request['post'];
@@ -77,4 +68,5 @@ class PostController extends Controller
     {
         return view('posts.create')->with(['categories' => $category->get()]);
     }
+    
 }
