@@ -7,38 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class Post extends Model
+class Message extends Model
 {
     use SoftDeletes;
     use HasFactory;
     
     protected $fillable = [
-        'title',
-        'body',
-        'category_id'
+        'text',
+        'groupId'
+        
         ];
 
-    public function getPaginateByLimit(int $limit_count = 5)
+    public function getPaginateByLimit(int $limit_count = 20)
     {
         //updated_atで降順に並べた後、limitで件数制限をかける
         return $this::with('category')->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
-    
-    public function category()
+
+    public function post()
     {
-        return $this->belongsTo(Category::class);
-    }
-    
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'post_user');
+        return $this->belongsTo(Post::class);
     }
 
-
-    
-    public function messages()
+    public function user()
     {
-        return $this->hasMany(Message::class);
+        return $this->belongsTo(User::class);
     }
+
 }
-

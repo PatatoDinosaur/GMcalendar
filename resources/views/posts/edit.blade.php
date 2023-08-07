@@ -25,7 +25,7 @@
                         <input type="submit" value="保存">
                     </form>
                 </div>
-                <div class="footer"
+                <div class="footer">
                     <a href="/posts/{{$post->id}}">戻る</a>
                 </div>
             </body>

@@ -6,24 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->foreignID('category_id')->constrained();
-            //
+            $table->foreignID('category_id')->constrained();//category_idはcategoriesテーブルのidを参照
         });
+
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
