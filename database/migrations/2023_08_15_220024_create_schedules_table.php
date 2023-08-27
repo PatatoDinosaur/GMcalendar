@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
-            $table->timestamps();
-            $table->softDeletes();
-            $table->foreignID('post_id')->constrained();//postsテーブルのIDを参照
-            $table->foreignID('user_id')->constrained();//usersテーブルのIDを参照
+            $table->DATE();
+            $table->TIME();
         });
     }
 
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('schedules');
     }
 };
