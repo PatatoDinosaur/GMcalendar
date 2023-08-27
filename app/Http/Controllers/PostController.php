@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models_Message;
+use App\Models\Message;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -24,15 +24,14 @@ class PostController extends Controller
     //特定IDのpostを表示する
     public function show(Post $post)
     {
-        return view('posts/show')->with (['post'=> $post]);
+        $path = app_path('resources/js/calendar.js');
+        return view('posts/show')->with ([
+            'post'=> $post,
+            'path'=>$path
+            ]);
         //'post'はbladeファイルで使う変数。$postはid=1のPostインスタンス
     }
-    /* 8-4で追加したブログ作成関数
-    public function create()
-    {
-        return view('posts/create');
-    }
-    */
+
     //投稿処理用の関数
     public function store(Request $request, Post $post)
     {
@@ -41,13 +40,15 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);
     }
     
-    public function edit(Post $post)
+    public function edit(Post $post, Category $category)
     {
-        return view('posts/edit')->with(['post' => $post]);
+        return view('posts/edit')->with(['post' => $post, 'categories' => $category->get()]);
     }
     
     public function chat(Post $post)
     {
+        $post = Post::find($postId);
+        //$messages =  $post->messages;
         return view('posts/chat')->with(['post' => $post]);
     }
     
@@ -66,7 +67,11 @@ class PostController extends Controller
     
     public function create(Category $category)
     {
-        return view('posts.create')->with(['categories' => $category->get()]);
+        return view('posts/create')->with(['categories' => $category->get()]);
     }
     
+    public function member(Post $post)
+    {
+        $users = $post->users;
+    }
 }

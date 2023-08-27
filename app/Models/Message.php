@@ -14,7 +14,8 @@ class Message extends Model
     
     protected $fillable = [
         'text',
-        'groupId'
+        'postId',
+        'userId',
         
         ];
 

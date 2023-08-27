@@ -36,10 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/posts/{post}/message', [ChatController::class, 'getMessages']);
-Route::get('/posts/{post}/chat', [ChatController::class, 'index']);
-Route::post('send-message', [ChatController::class, 'sendMessage']);
-Route::post('/posts/{post}/api/message', [ChatController::class, 'getMessages']);
-//Route::get('/posts/{post}/group/{groupId}', [ChatController::class, 'showGroupChat'])
-
+Route::controller(ChatController::class)->middleware(['auth'])->group(function(){
+    Route::get('/posts/{post}/message', 'getMessage')->name('getMessage');
+    Route::get('/posts/{post}/chat', 'showGroupChat')->name('showGroupChat');
+    Route::post('/posts/{post}/chat', 'sendMessage')->name('sendMessage');
+    Route::post('/posts/{post}/api/message')->name('getMessages');
+    //Route::get('/posts/{post}/group/{groupId}', [ChatController::class, 'showGroupChat'])
+});
 require __DIR__.'/auth.php';

@@ -9,19 +9,19 @@
     <x-app-layout>
         <x-slot name="header">
             <body class="anticliased">
-                <h1>グループ作成</h1>
+                <h1>新規グループ</h1>
                 <br>
                 <form action="/posts" method="POST">
                     @csrf
                     <div class ="title">
                         <h2>グループ名</h2>
-                        <input type="text" name="post[title]" placeholder=""/>
+                        <input type="text" name="post[title]"/>
                     </div>
                     <div class="body">
                         <h2>グループ情報</h2>
                         <textarea name="post[body]" placeholder="みんなでワイワイやってます！"></textarea>
                     </div>
-                    <div class = category>
+                    <div class = "category">
                         <h2>カテゴリー</h2>
                         <select name="post[category_id]">
                             @foreach($categories as $category)
