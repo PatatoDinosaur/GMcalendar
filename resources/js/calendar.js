@@ -17,6 +17,12 @@ var createYear = generate_year_range(1970, 2200);
 document.getElementById("year").innerHTML = createYear;
 
 var calendar = document.getElementById("calendar");
+tbl.addEventListener('click', function(event) {
+  if(event.target.classList.contains('date-picker')) {
+    var date = event.target.getAttribute('data-date');
+    //onDateClick(date);
+  }
+});
 var lang = calendar.getAttribute('data-lang');
 
 var months = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
@@ -49,6 +55,14 @@ function jump() {
   currentYear = parseInt(selectYear.value);
   currentMonth = parseInt(selectMonth.value);
   showCalendar(currentMonth, currentYear);
+}
+
+function onDateClick(date) {
+  //console.log("クリックされた日付：", date);
+  var eventForm = document.getElementById("eventForm");
+  var eventDateInput = document.getElementById("eventDate");
+  eventDateInput.value = date;
+  eventForm.style.display = "block";
 }
 
 function showCalendar(month, year) {
@@ -84,7 +98,7 @@ function showCalendar(month, year) {
               cell.setAttribute("data-month_name", months[month]);
               cell.className = "date-picker";
               cell.innerHTML = "<span>" + date + "</span>";
-
+              cell.setAttribute("onclick", "onDateClick(this.getAttribute('data-date'))");
               if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
                   cell.className = "date-picker selected";
               }
@@ -97,21 +111,17 @@ function showCalendar(month, year) {
   }
 
 }
-/*
+
 function daysInMonth(iMonth, iYear) {
   return 32 - new Date(iYear, iMonth, 32).getDate();
 }
 
-function onDateClick(date) {
-  var eventForm = document.getElementById("eventForm");
-  var eventDateInput = document.getElementById("eventDate");
-  eventDateInput.value = date;
-  eventForm.style.display = "block";
-}
 
-function addEvent() {
+
+function makeSchedule() {
   var eventDateInput = document.getElementById("eventDate");
   var eventTitleInput = document.getElementById("eventTitle");
+  var eventTimeInput = document.getElementById("eventTime");
   var date = eventDateInput.value;
   var title = eventTitleInput.value;
   
@@ -121,4 +131,5 @@ function addEvent() {
   eventDateInput.value = "";
   eventTitleInput.value = "";
 }
-*/
+
+
