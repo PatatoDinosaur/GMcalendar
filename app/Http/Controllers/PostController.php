@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Message;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 
 class PostController extends Controller
@@ -37,6 +38,7 @@ class PostController extends Controller
     {
         $input = $request['post'];
         $post->fill($input)->save();
+        Auth::user()->posts()->sync([$post->id]);//所属するグループを新規登録
         return redirect('/posts/' . $post->id);
     }
     

@@ -21,10 +21,17 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    
+    /*
     public function boot()
     {
         $this->registerPolicies();
+        
+        Gate::define('access-group', function($user, $post) {
+            return $user->isInGroup($post);
+        })
 
         //
     }
+    */
 }
