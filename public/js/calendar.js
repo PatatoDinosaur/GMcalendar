@@ -11,6 +11,7 @@ var currentMonth = today.getMonth();
 var currentYear = today.getFullYear();
 var selectYear = document.getElementById("year");
 var selectMonth = document.getElementById("month");
+var eventDate = new Date();
 
 var createYear = generate_year_range(1970, 2200);
 
@@ -20,12 +21,20 @@ var calendar = document.getElementById("calendar");
 
 calendar.addEventListener('click', function(event) {
   if(event.target.classList.contains('date-picker')) {
+    var year = event.target.getAttribute('data-year');
+    var month = event.target.getAttribute('data-month');
     var date = event.target.getAttribute('data-date');
-    console.log(event.target.getAttribute('data-year'));
-    console.log(event.target.getAttribute('data-month'));
+
+  month = String(month).padStart(2,'0');
+  date = String(date).padStart(2, '0');
+
     onDateClick(date);
+    document.getElementById("eventDate").value=year+'-'+month+'-'+date;
+    //event.target.classList.add("event-day");
+    console.log(document.getElementById("eventDate").value);
   }
 });
+
 
 var lang = calendar.getAttribute('data-lang');
 
@@ -62,10 +71,9 @@ function jump() {
 }
 
 function onDateClick(date) {
-  console.log("クリックされた日付：", date);
   var eventForm = document.getElementById("eventForm");
   var eventDateInput = document.getElementById("eventDate");
-  eventDateInput.value = date;
+  //eventDateInput.value = year + '-' + month + '-' + date;
   eventForm.style.display = "block";
 }
 
@@ -78,10 +86,9 @@ function showCalendar(month, year) {
 
   tbl.innerHTML = "";
 
-  monthAndYear.innerHTML = months[month] + " " + year;
+  monthAndYear.innerHTML = months[month] + "  " + year;
   selectYear.value = year;
   selectMonth.value = month;
-
   // creating all cells
   var date = 1;
   for ( var i = 0; i < 6; i++ ) {
@@ -100,12 +107,14 @@ function showCalendar(month, year) {
               cell.setAttribute("data-date", date);
               cell.setAttribute("data-month", month + 1);
               cell.setAttribute("data-year", year);
+              cell.setAttribute("data-event", event);
               cell.setAttribute("data-month_name", months[month]);
               cell.className = "date-picker";
               cell.innerHTML = "<span>" + date + "</span>";
               if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
                   cell.className = "date-picker selected";
               }
+              if (date)
               row.appendChild(cell);
               date++;
           }
@@ -113,6 +122,32 @@ function showCalendar(month, year) {
 
       tbl.appendChild(row);
   }
+
+    var events = document.querySelectorAll('.event');
+    events.forEach(function(event) {
+      var year = event.getAttribute('data-year');
+      var month = event.getAttribute('data-month');
+      var date = event.getAttribute('data-date');
+      
+      //month = String(month).padStart(2, '0');
+      //date = String(date).padStart(2, '0');
+      
+      
+      month = parseInt(month).toString();
+      date = parseInt(date).toString();
+      
+      var cell = document.querySelector('.date-picker[data-year="' + year + '"][data-month="' + month + '"][data-date="' + date + '"]');
+      console.log(month, date);
+      if(cell) {
+        cell.classList.add("event-day");
+        var flag = document.createElement("span");
+        flag.className = "event-flag";
+        cell.appendChild(flag);
+        console.log('success!');
+      }
+      else
+        console.log('failed');
+    });
 
 }
 
@@ -133,3 +168,4 @@ function makeSchedule() {
   eventDateInput.value = "";
   eventTitleInput.value = "";
 }
+

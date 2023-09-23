@@ -13,15 +13,19 @@ class Event extends Model
     use HasFactory;
     
     protected $fillable = [
-        'comment',
+        'title',
         'date',
         'time',
         ];
+        
+    protected $dates = ['date'];
     
     
     public function posts()
     {
-        return $this->belongsToMany(User::class, 'event_post');
+        return $this->belongsToMany(Post::class, 'event_post');
     }
 
 }
+
+?>

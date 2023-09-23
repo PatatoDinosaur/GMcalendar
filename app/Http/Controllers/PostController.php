@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Event;
+use App\Models\User;
 use App\Models\Message;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
@@ -23,17 +25,26 @@ class PostController extends Controller
         return view('posts/index')->with(['posts' => $post->getPaginateByLimit(5)]);
     } 
     //特定IDのpostを表示する
-    public function show(Post $post)
+    public function show(Post $post, Event $event)
     {
         $path = app_path('resources/js/calendar.js');
         return view('posts/show')->with ([
             'post'=> $post,
-            'path'=>$path
+            'path'=>$path,
+            'events'=>$event->get()
             ]);
         //'post'はbladeファイルで使う変数。$postはid=1のPostインスタンス
     }
 
-    //投稿処理用の関数
+    //イベント投稿処理用の関数
+    public function add(Request $request, Event $event, Post $post)
+    {
+        $input = $request['event'];
+        $event->fill($input)->save();
+        return redirect('/posts/' . $post->id);
+    }
+    
+    //グループ投稿処理用の関数
     public function store(Request $request, Post $post)
     {
         $input = $request['post'];
@@ -76,4 +87,20 @@ class PostController extends Controller
     {
         $users = $post->users;
     }
+    
+    public function invite(Post $post)
+    {
+        $users = User::all();
+        return view('posts/invite')->with(['post' => $post, 'users' => $users]);
+    }
+    
+    public function register(Post $post, Request $request)
+    {
+        $userId = $request->input('userId');
+        $user = User::find($userId);
+        $user->posts()->sync([$post->id]);//所属するグループを新規登録
+        //dd($user->id);
+        return redirect('/posts/' . $post->id);        
+     }
 }
+?>

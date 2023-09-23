@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Schedule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+
 
 class ProfileController extends Controller
 {
@@ -26,6 +28,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
@@ -57,4 +60,49 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+    
+    /**
+     * Update the user's ordinary schedules.
+     */
+    public function schedule(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+        //dd($user->schedules);
+        if(!$user->schedules) {
+            $user->schedules()->create([
+                'sunday' => $request->has('sunday'),
+                'monday' => $request->has('monday'),
+                'tuesday' => $request->has('tuesday'),
+                'wednesday' => $request->has('wednesday'),
+                'thursday' => $request->has('thursday'),
+                'friday' => $request->has('friday'),
+                'saturday' => $request->has('saturday'),
+     
+                'time_start' => $request->input('time_start'),
+                'time_end' => $request->input('time_end')
+            ]);
+        }
+        else {
+            //過去のレコードを削除
+            $user->schedules->delete();
+            
+            $user->schedules()->update([
+                'sunday' => $request->has('sunday'),
+                'monday' => $request->has('monday'),
+                'tuesday' => $request->has('tuesday'),
+                'wednesday' => $request->has('wednesday'),
+                'thursday' => $request->has('thursday'),
+                'friday' => $request->has('friday'),
+                'saturday' => $request->has('saturday'),
+     
+                'time_start' => $request->input('time_start'),
+                'time_end' => $request->input('time_end')
+                ]);
+        }
+        
+        //$user->schedules()->save();
+        //dd($user->schedules());
+        return Redirect::route('profile.edit')->with('status', 'schedule-updated');
+    }
+    
 }
