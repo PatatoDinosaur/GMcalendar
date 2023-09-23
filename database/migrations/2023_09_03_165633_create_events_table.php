@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('comment', 50);
-            $table->date('date');
+            $table->string('title', 50);
+            $table->date('date');//yyyymmddで日付を格納
             $table->time('time');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

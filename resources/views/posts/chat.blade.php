@@ -41,7 +41,7 @@
                             const messageContent = document.getElementById('message-content');
                             
                             chatForm.addEventListener('submit', function(event){
-                                messageContent.value = '';
+                                messageContent.value = '';//チャットが送信されたら入力欄をクリア
                             });
                         </script>
                     </div>

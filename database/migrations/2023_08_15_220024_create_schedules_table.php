@@ -15,8 +15,17 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            //$table->date();
-            //$table->time();
+            $table->boolean('sunday');
+            $table->boolean('monday');
+            $table->boolean('tuesday');
+            $table->boolean('wednesday');
+            $table->boolean('thursday');
+            $table->boolean('friday');
+            $table->boolean('saturday');
+            $table->time('time_start');
+            $table->time('time_end');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

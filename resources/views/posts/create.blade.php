@@ -11,7 +11,7 @@
             <body class="anticliased">
                 <h1>新規グループ</h1>
                 <br>
-                <form action="/posts" method="POST">
+                <form action="/posts/create" method="POST">
                     @csrf
                     <div class ="title">
                         <h2>グループ名</h2>

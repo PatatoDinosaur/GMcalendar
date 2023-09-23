@@ -19,8 +19,6 @@ return new class extends Migration
             $table->foreignID('user_id')->constrained();//user_idはusersテーブルのidを参照
             $table->primary(['post_id', 'user_id']);
         });
-        
-
     }
 
     /**

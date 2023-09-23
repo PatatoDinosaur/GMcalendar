@@ -11,9 +11,9 @@
     <x-app-layout>
         <x-slot name="header">
             <body>
-                <h1>グループ</h1>
                 <a href='/posts/create'>新規作成</a>
-                <br>
+                
+                <br><br>
                 <div class='posts'>
                     @foreach($posts as $post)
                         <!-- アクセスができないグループを非表示にする -->
@@ -39,9 +39,6 @@
                         @endif
                     @endforeach
                 </div>
-                    <p>
-                        ログインユーザー:{{Auth::user()->name}}
-                    </p>
 
                 <script>
                     function deletePost(id)
@@ -56,5 +53,4 @@
             </body>
         </x-slot>
     </x-app-layout>
-        
 </html>

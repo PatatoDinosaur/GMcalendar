@@ -35,11 +35,15 @@ class Post extends Model
         return $this->belongsToMany(User::class, 'post_user');
     }
 
-
-    
     public function messages()
     {
         return $this->hasMany(Message::class);
     }
+    
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_post');
+    }
 }
 
+?>

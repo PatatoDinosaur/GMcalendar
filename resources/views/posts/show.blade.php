@@ -15,9 +15,11 @@
                     <h1 class="title">
                         {{$post->title}}
                     </h1>
+                    
                     <div class="category">
                         <a href="/categories/{{$post->category->id}}">{{$post->category->name}}</a>
                     </div>
+                    
                     <div class="content">
                         <div class="content__post">
                             <h3>グループの説明</h3>
@@ -36,7 +38,7 @@
                             <tbody id="calendar-body" onclick="eventForm.style.display='block'"></tbody>
                         </table>
                       
-                        <div class="footer-container-calendar">
+                        <div class="footer-container-calendar" >
                            
                             <!--<label for="month">日付指定：</label>-->
                             <select id="month" onchange="jump()">
@@ -56,22 +58,33 @@
                             </select>
                             <select id="year" onchange="jump()"></select>
                         </div>
+                        
+                        <div class="events">
+                            @foreach($post->events as $event)
+                                <!-- イベントの確認 -->
+                                <div class="event" data-year="{{$event->date->format('Y')}}" data-month="{{$event->date->format('m')}}" data-date="{{$event->date->format('d')}}">
+                                </div>
 
+                            @endforeach
+                        </div>
+                        
                         <div class="add-event-calendar" id="eventForm" style="display:none;">
-                            <form action="/posts" method="POST">
+                            <form action="/posts/{{$post->id}}" method="POST">
                                 @csrf
-                                日付
-                                <input type="text" id="eventDate" value="eventDate" name="event[date]">
-                                <input type="text" id="eventTitle" name"event[comment]" placeholder="イベント名">
+                                日付:
+                                <input type="date" id="eventDate" value="eventDate" name="event[date]">
+                                <input type="text" id="eventTitle" name="event[title]" placeholder="イベント名">
                                 <h3>開始時刻</h3>
                                 <input type="time" id="eventTime" name="event[time]">
-                                <input type="submit"  />
+                                <input type="submit"/>
                             </form>
                         </div>   
                 </div>
                 <script src="{{url('js/calendar.js')}}" type="text/javascript"></script>
                 
-
+                    <div class="invite">
+                        <a href="/posts/{{$post->id}}/invite">招待</a>
+                    </div>    
                     <div class="edit">
                         <a href="/posts/{{$post->id}}/edit">編集</a>
                     </div>

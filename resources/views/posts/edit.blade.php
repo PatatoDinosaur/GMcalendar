@@ -36,6 +36,8 @@
                         <input type="radio" name="post[access_type]" value="public"> 公開
                         
                         <br>
+                        
+                        
                         <input type="submit" value="保存">
                     </form>
                 </div>
