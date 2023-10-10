@@ -22,16 +22,20 @@ class PostController extends Controller
      */
     public function index(Post $post)//インポートしたPostをインスタンス化して$postとして使用
     {
-        return view('posts/index')->with(['posts' => $post->getPaginateByLimit(5)]);
+        return view('posts/index')->with(['posts' => $post->getPaginateByLimit(8)]);
     } 
     //特定IDのpostを表示する
     public function show(Post $post, Event $event)
     {
         $path = app_path('resources/js/calendar.js');
+        $user = Auth::user();
+        $schedule = $user->schedules();
         return view('posts/show')->with ([
             'post'=> $post,
             'path'=>$path,
-            'events'=>$event->get()
+            'events'=>$event->get(),
+            'user' => $user,
+            'schedule' => $schedule,
             ]);
         //'post'はbladeファイルで使う変数。$postはid=1のPostインスタンス
     }
@@ -47,9 +51,18 @@ class PostController extends Controller
     //グループ投稿処理用の関数
     public function store(Request $request, Post $post)
     {
+        $request->validate([
+            'post.title' => ['required', 'string'],
+            'post.body' => ['string', 'max:50'],
+            'post.access_type' => ['required', 'in:private, public'],
+            ],
+            [
+            'required' => ':attribute は必須項目です',
+            'max' => ':attribute は :max 文字以内で入力してください',
+        ]);        
         $input = $request['post'];
         $post->fill($input)->save();
-        Auth::user()->posts()->sync([$post->id]);//所属するグループを新規登録
+        Auth::user()->posts()->attach([$post->id]);//所属するグループを新規登録
         return redirect('/posts/' . $post->id);
     }
     
@@ -98,9 +111,17 @@ class PostController extends Controller
     {
         $userId = $request->input('userId');
         $user = User::find($userId);
-        $user->posts()->sync([$post->id]);//所属するグループを新規登録
-        //dd($user->id);
+        $user->posts()->attach([$post->id]);//所属するグループを新規登録
         return redirect('/posts/' . $post->id);        
+     }
+     
+     public function attributes()
+     {
+        return [
+            'post.title' => 'グループ名',
+            'post.body' => 'グループ情報',
+            'post.access_type' => '公開状態',
+        ];
      }
 }
 ?>

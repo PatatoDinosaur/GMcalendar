@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'schedule_id'
     ];
 
     /**
@@ -54,7 +55,7 @@ class User extends Authenticatable
     
     public function schedules()
     {
-        return $this->belongsTo(Schedule::class);
+        return $this->belongsTo(Schedule::class, 'schedule_id');
     }
 }
 ?>

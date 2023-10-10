@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Event;
+use App\Models\Schedule;
 use App\Models\Category;
 use App\Http\Requests\EventRequest;
 use Illuminate\Http\Request;
@@ -20,20 +21,28 @@ class EventController extends Controller
         return redirect('/posts/' . $post->id);
     }
    
-    public function getEvent(Post $post)
+    public function getEvents(Request $request)
     {
-        return view('posts/index')->with(['posts' => $post->getPaginateByLimit(5)]);
-    }
+        $date = $request->input('date');
+        
+        // $dateを使用してデータベースからイベントを取得
+        $events = Event::whereDate('date', $date)->get();
 
-    public function show(Post $post, Category $category)
-    {
-        $path = app_path('resources/js/calendar.js');
-        return view('posts/show')->with ([
-            'post'=> $post,
-            'path'=>$path,
-            'category'=>$category
-            ]);
-        //'post'はbladeファイルで使う変数。$postはid=1のPostインスタンス
+        return response()->json($events);
+    }
+    
+    public function getUsersCountByDay(Request $request) {
+        
+        $counts = [
+            'sunday' => Schedule::where('sunday', true)->count(),
+            'monday' => Schedule::where('monday', true)->count(),
+            'tuesday' => Schedule::where('tuesday', true)->count(),
+            'wednesday' => Schedule::where('wednesday', true)->count(),
+            'thursday' => Schedule::where('thursday', true)->count(),
+            'friday' => Schedule::where('friday', true)->count(),
+            'saturday' => Schedule::where('saturday', true)->count(),
+        ];
+        return response()->json($counts);
     }
 
 }

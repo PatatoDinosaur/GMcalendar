@@ -11,18 +11,19 @@
 
     <form method="post" action="{{ route('schedule.update') }}" class="mt-6 space-y-6">
         @csrf
+        <label>日 <input type="checkbox" name="schedule[sunday]" @if($schedule->sunday) checked @endif></label>
+        <label>月 <input type="checkbox" name="schedule[monday]" @if($schedule->monday) checked @endif></label>
+        <label>火 <input type="checkbox" name="schedule[tuesday]" @if($schedule->tuesday) checked @endif></label>
+        <label>水 <input type="checkbox" name="schedule[wednesday]" @if($schedule->wednesday) checked @endif></label>
+        <label>木 <input type="checkbox" name="schedule[thursday]" @if($schedule->thursday) checked @endif></label>
+        <label>金 <input type="checkbox" name="schedule[friday]" @if($schedule->friday) checked @endif></label>
+        <label>土 <input type="checkbox" name="schedule[saturday]" @if($schedule->saturday) checked @endif></label>
 
-        <label>日 <input type="checkbox" name="sunday"></label>
-        <label>月 <input type="checkbox" name="monday"></label>
-        <label>火 <input type="checkbox" name="tuesday"></label>
-        <label>水 <input type="checkbox" name="wednesday"></label>
-        <label>木 <input type="checkbox" name="thursday"></label>
-        <label>金 <input type="checkbox" name="friday" ></label>
-        <label>土 <input type="checkbox" name="saturday"></label>
-        
         <br>
-        <input type="time" name="time_start">  ～  <input type="time" name="time_end">
-
+        <input type="time" name="schedule[time_start]" value="{{$schedule->time_start}}">
+        ～  
+        <input type="time" name="schedule[time_end]" value="{{$schedule->time_end}}">
+    
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

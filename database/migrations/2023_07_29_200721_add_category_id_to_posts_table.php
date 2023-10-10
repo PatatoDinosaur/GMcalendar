@@ -10,7 +10,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->foreignID('category_id')->constrained();//category_idはcategoriesテーブルのidを参照
+            $table->foreignID('category_id')->constrained()->nullable();//category_idはcategoriesテーブルのidを参照
         });
 
     }
