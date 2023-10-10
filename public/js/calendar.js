@@ -30,8 +30,16 @@ calendar.addEventListener('click', function(event) {
 
     onDateClick(date);
     document.getElementById("eventDate").value=year+'-'+month+'-'+date;
-    //event.target.classList.add("event-day");
     console.log(document.getElementById("eventDate").value);
+    var eventDetail = document.getElementById('eventDetail');
+    if(event.target.classList.contains('event-day')) {
+      var eventForm = document.getElementById('eventForm');
+      console.log('event already exist!');
+      eventDetail.style.display = "block";
+      
+    }
+    else
+      eventDetail.style.display = "none";
   }
 });
 
@@ -40,6 +48,34 @@ var lang = calendar.getAttribute('data-lang');
 
 var months = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
 var days = ["日", "月", "火", "水", "木", "金", "土"];
+
+var attendanceDays = {};
+
+$.ajax({
+  url: '/posts/' + postId + '/api/get-users-count-by-day',
+  type:'get',
+  dataType:'json',
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  },
+  success:function(data) {
+    attendanceDays = {
+      "日": data.sunday,
+      "月": data.monday,
+      "火": data.tuesday,
+      "水": data.wednesday,
+      "木": data.thursday,
+      "金": data.friday,
+      "土": data.saturday,  
+    };
+    var today = new Date();
+    showCalendar(today.getMonth(), today.getFullYear());
+  },
+  error:function(error) {
+    console.log('/posts/' + postId + '/api/get-users-count-by-day');
+    console.error('failed to load data.', error);
+  }
+});
 
 var dayHeader = "<tr>";
 for (day in days) {
@@ -73,7 +109,6 @@ function jump() {
 function onDateClick(date) {
   var eventForm = document.getElementById("eventForm");
   var eventDateInput = document.getElementById("eventDate");
-  //eventDateInput.value = year + '-' + month + '-' + date;
   eventForm.style.display = "block";
 }
 
@@ -109,6 +144,7 @@ function showCalendar(month, year) {
               cell.setAttribute("data-year", year);
               cell.setAttribute("data-event", event);
               cell.setAttribute("data-month_name", months[month]);
+              cell.setAttribute("data-day-of-week", attendanceDays[days[j]]);
               cell.className = "date-picker";
               cell.innerHTML = "<span>" + date + "</span>";
               if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
@@ -122,16 +158,12 @@ function showCalendar(month, year) {
 
       tbl.appendChild(row);
   }
-
+    
     var events = document.querySelectorAll('.event');
     events.forEach(function(event) {
       var year = event.getAttribute('data-year');
       var month = event.getAttribute('data-month');
       var date = event.getAttribute('data-date');
-      
-      //month = String(month).padStart(2, '0');
-      //date = String(date).padStart(2, '0');
-      
       
       month = parseInt(month).toString();
       date = parseInt(date).toString();
@@ -168,4 +200,6 @@ function makeSchedule() {
   eventDateInput.value = "";
   eventTitleInput.value = "";
 }
+
+
 

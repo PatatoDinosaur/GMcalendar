@@ -6,13 +6,15 @@
         <title>GMcalendar</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200, 600" rel="stylesheet">
+        <link rel="stylesheet" href="{{url('css/index.css')}}">
     </head>
 
     <x-app-layout>
         <x-slot name="header">
             <body>
-                <a href='/posts/create'>新規作成</a>
-                
+                <div  class="make-group">
+                    <a href='/posts/create'>新規作成</a>
+                </div>
                 <br><br>
                 <div class='posts'>
                     @foreach($posts as $post)
@@ -24,16 +26,13 @@
                                 <h2 class='title'>
                                     <a href="/posts/{{$post->id}}">{{$post->title}}</a>
                                 </h2>
+                                <!--
                                 <p class="category">
                                     <a href="/categories/{{$post->category->id}}">{{$post->category->name}}</a>
                                 </p>
+                                -->
                                 <p class='body'>{{$post->body}}</p>
-                        
-                                <form action="/posts/{{ $post->id }}" id="form_{{ $post->id}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" onclick="deletePost({{$post->id}})">delete</button>
-                                </form>
+                    
                                 <br>
                             </div>
                         @endif

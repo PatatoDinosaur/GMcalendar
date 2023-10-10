@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             PostSeeder::class,
+            ScheduleSeeder::class,
         ]);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

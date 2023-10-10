@@ -8,6 +8,8 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!--Calendar-->
         <link rel="stylesheet" href="{{url('css/calendar.css')}}">
+        
+        <meta name="csrf-token" content="{{csrf_token()}}">
     </head>
         <x-app-layout>
             <x-slot name="header">
@@ -26,6 +28,9 @@
                             <p>{{$post->body}}</p> 
                         </div>
                     </div>
+                    
+                    <!-- グループに所属する人のみカレンダー等の機能表示 -->
+                @if(Auth::user()->posts->contains($post))
                     <div class="container-calendar">
                         <h4 id="monthAndYear"></h4>
                         <div class="button-container-calendar">
@@ -64,22 +69,38 @@
                                 <!-- イベントの確認 -->
                                 <div class="event" data-year="{{$event->date->format('Y')}}" data-month="{{$event->date->format('m')}}" data-date="{{$event->date->format('d')}}">
                                 </div>
-
                             @endforeach
                         </div>
-                        
+
                         <div class="add-event-calendar" id="eventForm" style="display:none;">
                             <form action="/posts/{{$post->id}}" method="POST">
                                 @csrf
                                 日付:
-                                <input type="date" id="eventDate" value="eventDate" name="event[date]">
+                                <input type="date" id="eventDate" name="event[date]" oninput="checkDate()">
                                 <input type="text" id="eventTitle" name="event[title]" placeholder="イベント名">
                                 <h3>開始時刻</h3>
                                 <input type="time" id="eventTime" name="event[time]">
                                 <input type="submit"/>
+                                
                             </form>
-                        </div>   
-                </div>
+                            <div id="event-container"></div>
+                        </div>
+                        <br>
+                        <div class="event-detail" id="eventDetail" style="display:none;">
+                            <form action="/posts/{{$post->id}}" method="POST">
+                                @csrf
+                                @foreach($post->events as $event)
+                                        <p>{{$event->title}}：{{$event->date->format('Y-m-d')}} {{$event->time}}~
+                                        <input type="submit" value="参加"></input>
+                                        </p>
+                                @endforeach
+                                
+                            </form>
+                        </div>
+                    </div> 
+                    
+                <script>var postId = {{$post->id}}</script>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script src="{{url('js/calendar.js')}}" type="text/javascript"></script>
                 
                     <div class="invite">
@@ -91,9 +112,39 @@
                     <div class="chat">
                         <a href="/posts/{{$post->id}}/chat">チャット</a>
                     </div>
+                    
+                    <div class="text-center">
+                        <form action="/posts/{{ $post->id }}" id="form_{{ $post->id}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" onclick="deletePost({{$post->id}})">delete</button>
+                        </form>
+                    </div>
+
+                    <script>
+                        function deletePost(id)
+                        {
+                            'use strict'
+                        
+                            if(confirm('削除すると復元できません。\n本当に削除しますか？')){
+                                document.getElementById(`form_${id}`).submit();
+                            }
+                        }
+                    </script>
+                <!-- 所属していない場合には加入申請を送るためのボタンを表示 -->
+                @else
+                    <div class="join-request">
+                        <form action="/posts/{{$post->id}}" method="POST">
+                            @csrf
+                            <input type="button" value="加入申請"></input>
+                        </form>
+                    </div>
+                @endif
+                <div>
                     <div class="footer">
                         <a href="/">戻る</a>
                     </div>
+                </div>
                 </body>
             </x-slot>
         </x-app-layout>

@@ -22,12 +22,14 @@
                         <textarea name="post[body]" placeholder="みんなでワイワイやってます！"></textarea>
                     </div>
                     <div class = "category">
+                        
                         <h2>カテゴリー</h2>
                         <select name="post[category_id]">
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
                             @endforeach
                         </select>
+                        
                         
                         <h2>公開状態</h2>
                         <input type="radio" name="post[access_type]" value="private"> 限定公開
