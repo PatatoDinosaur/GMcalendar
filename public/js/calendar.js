@@ -58,7 +58,11 @@ $.ajax({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   },
+  data: {
+    postId: postId
+  },
   success:function(data) {
+    
     attendanceDays = {
       "日": data.sunday,
       "月": data.monday,

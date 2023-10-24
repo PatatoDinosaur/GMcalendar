@@ -53,7 +53,7 @@ class User extends Authenticatable
         return $this->hasMany(Message::class);
     }
     
-    public function schedules()
+    public function schedule()
     {
         return $this->belongsTo(Schedule::class, 'schedule_id');
     }

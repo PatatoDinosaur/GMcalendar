@@ -29,7 +29,7 @@ class PostController extends Controller
     {
         $path = app_path('resources/js/calendar.js');
         $user = Auth::user();
-        $schedule = $user->schedules();
+        $schedule = $user->schedule();
         return view('posts/show')->with ([
             'post'=> $post,
             'path'=>$path,
@@ -54,7 +54,7 @@ class PostController extends Controller
         $request->validate([
             'post.title' => ['required', 'string'],
             'post.body' => ['string', 'max:50'],
-            'post.access_type' => ['required', 'in:private, public'],
+            'post.access_type' => ['required'],
             ],
             [
             'required' => ':attribute は必須項目です',
@@ -66,9 +66,21 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);
     }
     
-    public function edit(Post $post, Category $category)
+    public function joinGroup(Post $post)
     {
-        return view('posts/edit')->with(['post' => $post, 'categories' => $category->get()]);
+        Auth::user()->posts()->attach([$post->id]);
+        return redirect('/posts/' . $post->id);
+    }
+    
+    public function quit(Post $post)
+    {
+        Auth::user()->posts()->detach($post->id);
+        return redirect('/');
+    }
+    
+    public function edit(Post $post)
+    {
+        return view('posts/edit')->with(['post' => $post]);
     }
     
     public function chat(Post $post)
@@ -91,14 +103,9 @@ class PostController extends Controller
         return redirect('/');
     }
     
-    public function create(Category $category)
+    public function create()
     {
-        return view('posts/create')->with(['categories' => $category->get()]);
-    }
-    
-    public function member(Post $post)
-    {
-        $users = $post->users;
+        return view('posts/create');
     }
     
     public function invite(Post $post)

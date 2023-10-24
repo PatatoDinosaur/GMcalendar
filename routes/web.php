@@ -22,13 +22,14 @@ Route::get('/index', function(){
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
     Route::get('/', 'index')->name('index');
-//    Route::post('/posts', 'add')->name('add');
 //    Route::get('/posts', 'display')->name('display');
     Route::post('/posts/create', 'store')->name('store');
     Route::get('/posts/create', 'create')->name('create');
     Route::get('/posts/{post}', 'show')->name('show');
     Route::put('/posts/{post}', 'update')->name('update');
-    Route::delete('/posts/{post}', 'delete')->name('delete');
+    Route::post('/posts/{post}/join', 'joinGroup')->name('joinGroup');
+    Route::delete('/posts/{post}', 'quit')->name('quit');
+//    Route::delete('/posts/{post}', 'delete')->name('delete');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
     Route::get('/posts/{post}/invite', 'invite')->name('invite');
     Route::post('/posts/{post}/invite', 'register')->name('register');

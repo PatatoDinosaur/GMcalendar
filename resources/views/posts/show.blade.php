@@ -8,6 +8,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!--Calendar-->
         <link rel="stylesheet" href="{{url('css/calendar.css')}}">
+        <link rel="stylesheet" href="{{url('css/group.css')}}">
         
         <meta name="csrf-token" content="{{csrf_token()}}">
     </head>
@@ -18,17 +19,15 @@
                         {{$post->title}}
                     </h1>
                     
-                    <div class="category">
-                        <a href="/categories/{{$post->category->id}}">{{$post->category->name}}</a>
-                    </div>
-                    
                     <div class="content">
                         <div class="content__post">
-                            <h3>グループの説明</h3>
                             <p>{{$post->body}}</p> 
                         </div>
                     </div>
-                    
+              
+
+
+            
                     <!-- グループに所属する人のみカレンダー等の機能表示 -->
                 @if(Auth::user()->posts->contains($post))
                     <div class="container-calendar">
@@ -86,12 +85,13 @@
                             <div id="event-container"></div>
                         </div>
                         <br>
+                        <!-- 作成されたイベント表示 -->
                         <div class="event-detail" id="eventDetail" style="display:none;">
-                            <form action="/posts/{{$post->id}}" method="POST">
+                            <form action="/posts/{{$post->id}}/event" method="POST">
                                 @csrf
+                                <p>---予定---</p>
                                 @foreach($post->events as $event)
                                         <p>{{$event->title}}：{{$event->date->format('Y-m-d')}} {{$event->time}}~
-                                        <input type="submit" value="参加"></input>
                                         </p>
                                 @endforeach
                                 
@@ -117,32 +117,32 @@
                         <form action="/posts/{{ $post->id }}" id="form_{{ $post->id}}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="button" onclick="deletePost({{$post->id}})">delete</button>
+                            <button class="delete" type="button" onclick="quitPost({{$post->id}})">退会</button>
                         </form>
                     </div>
 
                     <script>
-                        function deletePost(id)
+                        function quitPost(id)
                         {
                             'use strict'
                         
-                            if(confirm('削除すると復元できません。\n本当に削除しますか？')){
+                            if(confirm('このグループを退会します。\n本当に退会しますか？')){
                                 document.getElementById(`form_${id}`).submit();
                             }
                         }
                     </script>
                 <!-- 所属していない場合には加入申請を送るためのボタンを表示 -->
                 @else
-                    <div class="join-request">
-                        <form action="/posts/{{$post->id}}" method="POST">
+                    <div class="join-group">
+                        <form action="/posts/{{$post->id}}/join" method="POST">
                             @csrf
-                            <input type="button" value="加入申請"></input>
+                            <button type="submit">加入</button>
                         </form>
                     </div>
                 @endif
                 <div>
                     <div class="footer">
-                        <a href="/">戻る</a>
+                        <a href="/dashboard">戻る</a>
                     </div>
                 </div>
                 </body>
