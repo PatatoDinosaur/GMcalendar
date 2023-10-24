@@ -21,7 +21,6 @@ class PostSeeder extends Seeder
             'body' => 'てきとうにやります',
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
-            'category_id'=> 3,
         ]);
     }
 }

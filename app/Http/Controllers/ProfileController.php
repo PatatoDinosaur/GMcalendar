@@ -19,7 +19,7 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         $user = $request->user();
-        $schedule = $user->schedules;
+        $schedule = $user->schedule;
         return view('profile.edit', [
             'user' => $user,
             'schedule' => $schedule,

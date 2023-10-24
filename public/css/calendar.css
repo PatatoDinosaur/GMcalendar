@@ -100,6 +100,7 @@ color: blue;
 
 .date-picker {
   position: relative;
+  content: attr(data-day-of-week);
 
 }
 
@@ -108,27 +109,22 @@ color: blue;
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 4px;
-  height: 4px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background:#0091EA;
+  background:#559FEA;
 
 }
-.attend-num {
-  content: attr(data-day-of-week);
-  position: absolute;
-  top: 6px;
-  left: 8px;
-}
+
 .date-picker::after {
   content: attr(data-day-of-week);
   position: absolute;
-  top: 6px;
+  top:10px;
   left:2px;
-  width: 4px;
-  height: 7px;
-  background:#0091EA;
+  width: 8px;
+  height:12px;
+  background:#559FEA;
   font-size:14px;
-  color: black;
+  color:black;
 }
 
