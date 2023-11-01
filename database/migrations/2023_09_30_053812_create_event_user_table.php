@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 50)->nullable();
-            $table->date('date');//yyyymmddで日付を格納
-            $table->time('time');
-            $table->timestamps();
-            $table->softDeletes();
-            $table->string('master_id');
+        Schema::create('event_user', function (Blueprint $table) {
+            $table->foreignID('event_id')->constrained();
+            $table->foreignID('user_id')->constrained();
+            $table->primary(['event_id', 'user_id']);
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('event_user');
     }
 };

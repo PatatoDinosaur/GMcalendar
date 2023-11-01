@@ -21,6 +21,8 @@ class PostSeeder extends Seeder
             'body' => 'てきとうにやります',
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
+            'master_id' => 1,
         ]);
+        
     }
 }

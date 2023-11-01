@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{str_replace('_','-', app()->getLocale())}}">
     <head>
-        <title>ユーザー一覧</title>
+        <meta charset="utf-8">
+        <title>招待するユーザー</title>
+                <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200, 600" rel="stylesheet">
     </head>
     <body>
+        <h1>招待するユーザー</h1>
+        <!-- 検索機能 -->
+        <form method="GET" action="/posts/{{$post->id}}/invite/search">
+            <input type="search" placeholder="ユーザー名を入力" name="search" value="@if (isset($search)) {{ $search }} @endif">
+            <div>
+                <button type="submit">検索</button>
+            </div>
+        </form>
         <form id="addRequest" action="/posts/{{$post->id}}/invite" method="POST">
             @csrf
             <input type="hidden" id="userId" name="userId">
+
             
-            <h1>ユーザー一覧</h1>
             <div class="invite">
                 @foreach ($users as $user)
-                    <li>{{ $user->name }} <button type="button" onclick="inviteUser({{$user->id}}, '{{$user->name}}')">招待</button></li>
+                    @if(!$user->posts->contains($post))
+                    <li>{{ $user->name }} <button type="submit" onclick="inviteUser({{$user->id}}, '{{$user->name}}')">招待</button></li>
+                    @endif
                 @endforeach
             </div>
+
             <div class="footer">
-                <a href="/">戻る</a>
+                <a href="/posts/{{$post->id}}">戻る</a>
             </div>
             <script>
                 function inviteUser(id, name)

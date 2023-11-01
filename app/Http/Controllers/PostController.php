@@ -6,10 +6,11 @@ use App\Models\Post;
 use App\Models\Event;
 use App\Models\User;
 use App\Models\Message;
+use App\Models\Category;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Category;
+
 
 class PostController extends Controller
 {
@@ -62,6 +63,7 @@ class PostController extends Controller
         ]);        
         $input = $request['post'];
         $post->fill($input)->save();
+        $post->master_id = Auth::user()->id;
         Auth::user()->posts()->attach([$post->id]);//所属するグループを新規登録
         return redirect('/posts/' . $post->id);
     }
@@ -81,13 +83,6 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         return view('posts/edit')->with(['post' => $post]);
-    }
-    
-    public function chat(Post $post)
-    {
-        $post = Post::find($postId);
-        //$messages =  $post->messages;
-        return view('posts/chat')->with(['post' => $post]);
     }
     
     public function update(Request $request, Post $post)
@@ -122,13 +117,38 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);        
      }
      
-     public function attributes()
-     {
+    public function attributes()
+    {
         return [
             'post.title' => 'グループ名',
             'post.body' => 'グループ情報',
             'post.access_type' => '公開状態',
         ];
-     }
+    }
+    
+    public function serchUser(Request $request)
+    {
+        $users = User::paginate(20);
+        $search = $request->input('search');
+        $query = User::query();
+
+        if ($search) {
+
+            // 全角スペースを半角に変換
+            $spaceConversion = mb_convert_kana($search, 's');
+            
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+            foreach($wordArraySearched as $value) {
+                $query->where('name', 'like', '%'.$value.'%');
+            }
+
+            $users = $query->paginate(20);
+
+        }
+
+        return view('/posts/' . $post->id)->with(['users' => $users, 'search' => $search]);
+    }
+     
 }
 ?>

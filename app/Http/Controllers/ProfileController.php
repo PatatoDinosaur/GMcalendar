@@ -88,10 +88,11 @@ class ProfileController extends Controller
         $input['thursday'] = isset($input['thursday']) ? filter_var($input['thursday'], FILTER_VALIDATE_BOOLEAN) : false;
         $input['friday'] = isset($input['friday']) ? filter_var($input['friday'], FILTER_VALIDATE_BOOLEAN) : false;
         $input['saturday'] = isset($input['saturday']) ? filter_var($input['saturday'], FILTER_VALIDATE_BOOLEAN) : false;
-        $user->schedules()->update($input);
+        $user->schedule()->update($input);
         
         return Redirect::route('profile.edit')->with('status', 'schedule-updated');
     }
     
+
 
 }

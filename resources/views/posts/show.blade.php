@@ -5,10 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Posts</title>
         <!--Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">
         <!--Calendar-->
-        <link rel="stylesheet" href="{{url('css/calendar.css')}}">
-        <link rel="stylesheet" href="{{url('css/group.css')}}">
+        <link rel="stylesheet" href="{{asset('/css/calendar.css')}}">
+        <link rel="stylesheet" href="{{asset('/css/group.css?202')}}">
         
         <meta name="csrf-token" content="{{csrf_token()}}">
     </head>
@@ -24,10 +24,6 @@
                             <p>{{$post->body}}</p> 
                         </div>
                     </div>
-              
-
-
-            
                     <!-- グループに所属する人のみカレンダー等の機能表示 -->
                 @if(Auth::user()->posts->contains($post))
                     <div class="container-calendar">
@@ -72,7 +68,7 @@
                         </div>
 
                         <div class="add-event-calendar" id="eventForm" style="display:none;">
-                            <form action="/posts/{{$post->id}}" method="POST">
+                            <form action="/posts/{{$post->id}}/add" method="POST">
                                 @csrf
                                 日付:
                                 <input type="date" id="eventDate" name="event[date]" oninput="checkDate()">
@@ -85,17 +81,64 @@
                             <div id="event-container"></div>
                         </div>
                         <br>
-                        <!-- 作成されたイベント表示 -->
-                        <div class="event-detail" id="eventDetail" style="display:none;">
-                            <form action="/posts/{{$post->id}}/event" method="POST">
-                                @csrf
-                                <p>---予定---</p>
-                                @foreach($post->events as $event)
-                                        <p>{{$event->title}}：{{$event->date->format('Y-m-d')}} {{$event->time}}~
-                                        </p>
-                                @endforeach
-                                
-                            </form>
+                        <!-- イベント表示 -->
+                        <div class="event-detail-today" id="eventDetail-today" style="display:block">
+                            <p>---今日の予定---</p>
+                            @foreach($post->events()->orderBy('date', 'asc')->get() as $event)
+                                @if($event->date->isToday())
+                                <div class="inline-container">
+                                    <p class="event-title">{{$event->title}}：{{$event->date->format('Y-m-d')}} {{$event->time}}~</p>
+                                    <form action="/posts/{{$post->id}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="event_id" value="{{$event->id}}">
+                                        <button type="submit" class="participate-button">参加</button>
+                                    </form>
+                                    
+                                </div>
+                                <div class="event-info">
+                                        <div class="members">
+                                            <a href="/posts/{{$post->id}}/members?event_id={{$event->id}}">参加者一覧</a>
+                                        </div>
+                                        @if(Auth::user()->id == $event->master_id)<div></div>
+                                            <form action="/posts/{{ $post->id }}/cancel" id="form_{{ $post->id}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="delete" type="button" onclick="deleteEvent({{$post->id}}, '{{$event->title}}')">予定を削除</button>
+                                            </form>
+                                        @endif
+                                        <br>
+                                </div>
+                                @endif
+                            @endforeach
+                        </div>
+                        <div class="event-detail-future" id="eventDetail" style="display:none;">
+                            <p>---今後の予定---</p>
+                            @foreach($post->events()->orderBy('date', 'asc')->get() as $event)
+                                @if($event->date->isFuture())
+                                <div class="inline-container">
+                                    <p class="event-title">{{$event->title}}：{{$event->date->format('Y-m-d')}} {{$event->time}}~</p>
+                                    <form action="/posts/{{$post->id}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="event_id" value="{{$event->id}}">
+                                        <button type="submit" class="participate-button">参加</button>
+                                    </form>
+                                    
+                                </div>
+                                <div class="event-info">
+                                        <div class="members">
+                                            <a href="/posts/{{$post->id}}/members?event_id={{$event->id}}">参加者一覧</a>
+                                        </div>
+                                        @if(Auth::user()->id == $event->master_id)<div></div>
+                                            <form action="/posts/{{ $post->id }}/cancel" id="form_{{ $post->id}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="delete" type="button" onclick="deleteEvent({{$post->id}}, '{{$event->title}}')">予定を削除</button>
+                                            </form>
+                                        @endif
+                                        <br>
+                                </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div> 
                     
@@ -113,13 +156,23 @@
                         <a href="/posts/{{$post->id}}/chat">チャット</a>
                     </div>
                     
-                    <div class="text-center">
-                        <form action="/posts/{{ $post->id }}" id="form_{{ $post->id}}" method="post">
+                    <div class="delete-post">
+                        <form action="/posts/{{ $post->id }}/quit" id="form_{{ $post->id}}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button class="delete" type="button" onclick="quitPost({{$post->id}})">退会</button>
+                            <button type="submit" class="quit-button" onclick="quitPost({{$post->id}})">退会</button>
                         </form>
                     </div>
+
+                    @if($user->id == $post->master_id)
+                    <div class="delete">
+                        <form action="/posts/{{ $post->id }}/delete" id="form_{{ $post->id}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button class="delete" type="button" onclick="deletePost({{$post->id}})">グループを削除</button>
+                        </form>
+                    </div>
+                    @endif
 
                     <script>
                         function quitPost(id)
@@ -127,6 +180,15 @@
                             'use strict'
                         
                             if(confirm('このグループを退会します。\n本当に退会しますか？')){
+                                document.getElementById(`form_${id}`).submit();
+                            }
+                        }
+
+                        function deletePost(id)
+                        {
+                            'use strict'
+                        
+                            if(confirm('このグループを削除します。\n本当に退会しますか？')){
                                 document.getElementById(`form_${id}`).submit();
                             }
                         }
@@ -140,6 +202,7 @@
                         </form>
                     </div>
                 @endif
+                <br>
                 <div>
                     <div class="footer">
                         <a href="/dashboard">戻る</a>

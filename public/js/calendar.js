@@ -205,5 +205,12 @@ function makeSchedule() {
   eventTitleInput.value = "";
 }
 
-
+function deleteEvent(id, title)
+{
+  'use strict'
+  
+  if(confirm('予定：'+title+'を削除しますか？')){
+    document.getElementById(`form_${id}`).submit();
+  }
+}
 

@@ -6,7 +6,7 @@
         <title>GMcalendar</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200, 600" rel="stylesheet">
-        <link rel="stylesheet" href="{{url('css/index.css')}}">
+        <link rel="stylesheet" href="{{asset('css/index.css')}}">
     </head>
 
     <x-app-layout>
@@ -34,17 +34,6 @@
                         @endif
                     @endforeach
                 </div>
-
-                <script>
-                    function deletePost(id)
-                    {
-                        'use strict'
-                        
-                        if(confirm('削除すると復元できません。\n本当に削除しますか？')){
-                            document.getElementById(`form_${id}`).submit();
-                        }
-                    }
-                </script>
             </body>
         </x-slot>
     </x-app-layout>

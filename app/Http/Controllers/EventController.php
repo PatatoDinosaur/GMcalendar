@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Event;
 use App\Models\Schedule;
 use App\Models\Category;
@@ -21,11 +22,22 @@ class EventController extends Controller
             ],
             [
             'required' => ':attributeを入力してください']
-);
+        );
         
         $input = $request['event'];
+        $event->master_id = Auth::user()->id;
         $event->fill($input)->save();
         $post->events()->save($event);
+        return redirect('/posts/' . $post->id);
+    }
+    
+    public function participate(Post $post, Request $request)
+    {
+        $event = Event::with('users')->find($request->input('event_id'));
+        $user = Auth::user();
+        if(!$event->users->contains($user)) {
+            $event->users()->attach($user->id);
+        }
         return redirect('/posts/' . $post->id);
     }
    
@@ -75,6 +87,19 @@ class EventController extends Controller
                 //}
             }
         return response()->json($counts);
+    }
+    
+    public function viewEventMembers(Request $request, Post $post)
+    {
+        $event = Event::with('users')->find($request->input('event_id')); 
+        $users = User::all();
+        return view('posts/member', compact('post', 'users', 'event'));
+    }
+    
+    public function cancelEvent(Event $event, Post $post)
+    {
+        $event->delete();
+        return redirect('/posts/'.$post->id);
     }
 
 }
