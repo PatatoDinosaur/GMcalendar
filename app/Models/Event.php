@@ -25,6 +25,11 @@ class Event extends Model
     {
         return $this->belongsToMany(Post::class, 'event_post');
     }
+    
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'event_user');
+    }
 
 }
 

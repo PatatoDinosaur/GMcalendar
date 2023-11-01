@@ -5,7 +5,7 @@
         <title>Blog</title>
         
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" >
-        <link rel="stylesheet" href="{{url("css/group.css")}}" >
+        <link rel="stylesheet" href="{{asset("css/group.css")}}" >
     </head>
     <x-app-layout>
         <x-slot name="header">

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Http\Requests\ChatRequest;
 use App\Models\Message;
 use App\Models\Post;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
@@ -40,7 +39,6 @@ class ChatController extends Controller
     {
         $post = Post::findOrFail($postId);
         $messages = Message::where('post_id', $postId)->orderBy('created_at', 'DESC')->get();
-        //dd(Auth::user()->id, intval($request->route('post')), 1, 2);
         return view('posts/chat', compact('post', 'messages'));
         
     }

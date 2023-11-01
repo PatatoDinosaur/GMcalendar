@@ -57,5 +57,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Schedule::class, 'schedule_id');
     }
+    
+    public function events()
+    {
+        return $this->belongsToMany(Post::class, 'event_user');
+    }
 }
 ?>

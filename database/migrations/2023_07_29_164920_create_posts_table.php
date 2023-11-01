@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->string('access_type')->default('public');
+            $table->string('master_id');
         });
     }
 

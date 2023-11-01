@@ -53,44 +53,6 @@
                     </div>
                 </body>
                 
-               <!-- 
-                <script type ="text/javascript">
-                
-                const messageInput = document.getElementById('message');
-                const sendButton = document.getElementById('send-button');
-               
-               
-                sendButton.addEventListener('click', () => {
-                    const messageContent = messageInput.value;
-                    if (messageContent.trim() !== '') {
-                        const postID = 2;
-                        const userID = 3;
-                        // Ajaxを使ってメッセージを送信
-                        fetch('/send-message', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            },
-                            body: JSON.stringify({
-                                content: messageContent,
-                                post_id: postID,
-                                user_id: userID
-                            })
-                        }).then(response => {
-                            if (response.ok) {
-                                // メッセージが送信された後に、メッセージ欄をクリアするなどの処理を行う
-                                messageInput.value = '';
-                            }
-                        }).catch(error => console.error('エラーが発生しました:', error));
-                        console.log(messageContent, postID, userID);
-                    }
-                    
-
-                });
-                
-                </script>
-                -->
             </x-slot>
         </x-app-layout>
 </html>
