@@ -195,16 +195,16 @@
   opacity:0.7;
 }
 
-.participate-button a{
+.event-button{
   width: 100px;
   padding: 9px;
-  color:#000000;
+  color:#2B88F5;
   font-size: 15px;
   line-height: 70%;
   text-align: center;
   text-decoration: none;
-  background: #2BBBF5;
-  display: block;
+  background: #fff;
+  display: inline-block;
   position:relative;
   -webkit-border-radius: 24px;
   -moz-border-radius: 24px;
@@ -219,25 +219,82 @@
   -o-transition: 0.3s ease-out;
   transition: 0.3s ease-out;
 }
-.participate-button a:hover{
+.event-button:hover{
   opacity:0.7;
 }
 
-.delete-post a{
+.send-button{
   width: 100px;
   padding: 9px;
-  color:#000000;
+  color:#2B88F5;
   font-size: 15px;
   line-height: 70%;
   text-align: center;
   text-decoration: none;
-  background: #eb1f1f;
+  background: #fff;
+  display: inline-block;
+  position:relative;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  border-radius: 24px;
+  border-color: #2B88F5;
+  border-width: 2px;
+  -webkit-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -moz-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  margin-bottom: 7px; 
+}
+.send-button:hover{
+  opacity:0.7;
+}
+
+.participate-button{
+  width: 100px;
+  padding: 9px;
+  color:#2B88F5;
+  font-size: 15px;
+  line-height: 70%;
+  text-align: center;
+  text-decoration: none;
+  background: #fff;
+  display: inline-block;
+  position:relative;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  border-radius: 24px;
+  border-color: #2B88F5;
+  border-width: 2px;
+  -webkit-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -moz-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+}
+.participate-button:hover{
+  opacity:0.7;
+}
+
+.delete-event{
+  width: 100px;
+  padding: 9px;
+  color:#ff2929;
+  font-size: 15px;
+  line-height: 70%;
+  text-align: center;
+  text-decoration: none;
+  background: #fff;
   display: block;
   position:relative;
   -webkit-border-radius: 24px;
   -moz-border-radius: 24px;
   border-radius: 24px;
-  border-color: #870606;
+  border-color: #ff2929;
   border-width: 2px;
   -webkit-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
   -moz-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
@@ -248,7 +305,36 @@
   transition: 0.3s ease-out;
   margin-bottom: 7px;
 }
-.delete-post a:hover{
+.delete-event:hover{
+  opacity:0.7;
+}
+
+.delete-post{
+  width: 100px;
+  padding: 9px;
+  color:#ff2929;
+  font-size: 15px;
+  line-height: 70%;
+  text-align: center;
+  text-decoration: none;
+  background: #fff;
+  display: block;
+  position:relative;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  border-radius: 24px;
+  border-color: #ff2929;
+  border-width: 2px;
+  -webkit-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -moz-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  margin-bottom: 7px;
+}
+.delete-post:hover{
   opacity:0.7;
 }
 
@@ -262,6 +348,68 @@
   display: inline;
 }
 
-.participate-button {
-  margin-left: 10px;
+.chat-button{
+  width: 100px;
+  padding: 9px;
+  color:#2B88F5;
+  font-size: 15px;
+  line-height: 70%;
+  text-align: center;
+  text-decoration: none;
+  background: #fff;
+  display: inline-block;
+  position:relative;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  border-radius: 24px;
+  border-color: #2B88F5;
+  border-width: 2px;
+  -webkit-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -moz-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+}
+.chat-button:hover{
+  opacity:0.7;
+}
+
+.message-text{
+  font-size: 17px;
+  font-weight: bolder;
+}
+
+.message-info{
+  font-size: 13px;
+}
+
+.delete-message{
+  width: 70px;
+  padding: 5px;
+  color:#ff2929;
+  font-size: 15px;
+  line-height: 70%;
+  text-align: center;
+  text-decoration: none;
+  background: #fff;
+  display: block;
+  position:relative;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  border-radius: 24px;
+  border-color: #ff2929;
+  border-width: 2px;
+  -webkit-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -moz-box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  box-shadow:0px 15px 30px -15px rgba(0,0,0,0.3);
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  margin-bottom: 7px; 
+}
+.delete-post:hover{
+  opacity:0.7;
 }

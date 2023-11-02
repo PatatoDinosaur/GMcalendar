@@ -11,7 +11,7 @@
     <x-app-layout>
         <x-slot name="header">
             <body>
-                <div>My group</div>
+                <div class="my-group">My group</div>
                 <br><br>
                 <div class="posts">
                     @foreach($posts as $post)

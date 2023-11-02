@@ -31,7 +31,7 @@
                         <br>
                         
                         
-                        <input class="register" type="submit" value="保存">
+                        <input class="send-button" type="submit" value="保存">
                     </form>
                 </div>
                 <div class="footer">

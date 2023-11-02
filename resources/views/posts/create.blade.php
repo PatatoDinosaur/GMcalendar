@@ -5,15 +5,16 @@
         <title>NewGroup</title>
         
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{asset('/css/group.css')}}">
     </head>
     <x-app-layout>
         <x-slot name="header">
             <body class="anticliased">
-                <h1>新規グループ</h1>
+                <h1 class="event-title">新規グループ</h1>
                 <br>
                 <form action="/posts/create" method="POST">
                     @csrf
-                    <div class ="title">
+                    <div class ="newtitle">
                         <h2>グループ名</h2>
                         <input type="text" name="post[title]"/>
                     </div>
@@ -27,7 +28,7 @@
                         <input type="radio" name="post[access_type]" value="public"> 公開
                     </div>
                     <br>
-                    <input type="submit" value="作成"/>
+                    <input type="submit" class="send-button" value="作成"/>
                 </form>
                 <div class = "footer">
                     <a href="/">戻る</a>

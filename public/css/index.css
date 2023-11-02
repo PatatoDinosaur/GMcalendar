@@ -12,6 +12,15 @@
   padding: 7px 0 5px 10px;
 }
 
+.my-group{
+  background: #0095d9;
+  color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 0 20px;
+  padding: 10px 20px;
+}
+
 .make-group {
     border-radius: 3px;
     box-sizing: border-box;
