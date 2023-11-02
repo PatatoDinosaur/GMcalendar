@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">
         <!--Calendar-->
         <link rel="stylesheet" href="{{asset('/css/calendar.css')}}">
-        <link rel="stylesheet" href="{{asset('/css/group.css?202')}}">
+        <link rel="stylesheet" href="{{asset('/css/group.css')}}">
         
         <meta name="csrf-token" content="{{csrf_token()}}">
     </head>
@@ -75,7 +75,7 @@
                                 <input type="text" id="eventTitle" name="event[title]" placeholder="イベント名">
                                 <h3>開始時刻</h3>
                                 <input type="time" id="eventTime" name="event[time]">
-                                <input type="submit"/>
+                                <input type="submit" class="event-button"/>
                                 
                             </form>
                             <div id="event-container"></div>
@@ -103,7 +103,7 @@
                                             <form action="/posts/{{ $post->id }}/cancel" id="form_{{ $post->id}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="delete" type="button" onclick="deleteEvent({{$post->id}}, '{{$event->title}}')">予定を削除</button>
+                                                <button class="delete-event" type="button" onclick="deleteEvent({{$post->id}}, '{{$event->title}}')">予定を削除</button>
                                             </form>
                                         @endif
                                         <br>
@@ -165,7 +165,7 @@
                     </div>
 
                     @if($user->id == $post->master_id)
-                    <div class="delete">
+                    <div class="delete-post">
                         <form action="/posts/{{ $post->id }}/delete" id="form_{{ $post->id}}" method="post">
                             @csrf
                             @method('DELETE')

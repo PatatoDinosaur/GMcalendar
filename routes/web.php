@@ -27,8 +27,7 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::delete('/posts/{post}/delete', 'delete')->name('delete');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
     Route::get('/posts/{post}/invite', 'invite')->name('invite');
-    Route::post('/posts/{post}/invite/user', 'register')->name('register');
-    Route::get('/posts/{post}/invite/search', 'searchUser')->name('searchUser');
+    Route::post('/posts/{post}/invite', 'register')->name('register');
 });
 
 Route::get('/categories/{category}', [CategoryController::class,'index'])->middleware("auth");

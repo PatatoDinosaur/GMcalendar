@@ -8,13 +8,7 @@
     </head>
     <body>
         <h1>招待するユーザー</h1>
-        <!-- 検索機能 -->
-        <form method="GET" action="/posts/{{$post->id}}/invite/search">
-            <input type="search" placeholder="ユーザー名を入力" name="search" value="@if (isset($search)) {{ $search }} @endif">
-            <div>
-                <button type="submit">検索</button>
-            </div>
-        </form>
+        
         <form id="addRequest" action="/posts/{{$post->id}}/invite" method="POST">
             @csrf
             <input type="hidden" id="userId" name="userId">
