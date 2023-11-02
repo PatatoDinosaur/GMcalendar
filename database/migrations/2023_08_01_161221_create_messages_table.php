@@ -19,7 +19,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreignID('post_id')->constrained();//postsテーブルのIDを参照
-            $table->foreignID('user_id')->constrained();//usersテーブルのIDを参照
+            $table->foreignID('user_id')->constrained();//usersテーブルのIDを参
+            
         });
     }
 

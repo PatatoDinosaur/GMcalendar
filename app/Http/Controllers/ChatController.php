@@ -16,16 +16,9 @@ class ChatController extends Controller
         return view('/post/posts/chat', compact('messages'))->with(['posts' => $post->getPaginateByLimit(20)]);
     }
     
-    public function getMessages()
-    {
-        $message = Message::orderBy('created_at', 'asc')->get();
-        //return redirect('/');
-        return response()->json(['messages'->$message]);
-    }
-    
     public function sendMessage(Request $request, Post $post, Message $message)
     {
-            $request->validate([
+        $request->validate([
             'message.content' => ['required', 'string'],
         ],[
             'required' => ':attribute は必須項目です',
@@ -38,7 +31,6 @@ class ChatController extends Controller
         $message->save();
         
         return redirect("posts/{$post->id}/chat");
-        //return response()->json(['status' => 'success']);
     }
     
     public function showGroupChat($postId, Request $request)
