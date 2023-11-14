@@ -1,0 +1,53 @@
+.title {
+  background: linear-gradient(#F3F5F5, #fff);
+  background: -o-linear-gradient(#F3F5F5, #fff);
+  background: -ms-linear-gradient(#F3F5F5, #fff);
+  background: -moz-linear-gradient(#F3F5F5, #fff);
+  background: -webkit-linear-gradient(#F3F5F5, #fff);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(1.00, #fff), color-stop(0.00, #F3F5F5));
+  border-bottom: 2px solid #1B73BA;
+  box-sizing: border-box;
+  font-size: 18px;
+  margin: 0 0 20px;
+  padding: 7px 0 5px 10px;
+}
+
+.my-group{
+  background: #0095d9;
+  color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 0 20px;
+  padding: 10px 20px;
+}
+
+.make-group {
+    border-radius: 3px;
+    box-sizing: border-box;
+    width:100px;
+}
+
+.make-group a {
+    background-color: #1B73BA;
+    border-radius: 3px;
+    color: white;
+    font-size: 13px;
+    display: block;
+    padding: 13px 10px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.2s ease-in-out;
+    -o-transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+}
+
+.make-group a:hover {
+    background-color: #F0F0F0;
+    color: #1B73BA;
+}
+
+.make-group a:hover:before {
+    border-left: 4px solid #1B73BA;
+}

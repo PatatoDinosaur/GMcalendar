@@ -1,0 +1,130 @@
+.wrapper {
+  margin: 15px auto;
+  max-width: 700px;
+}
+.container-calendar {
+  background: #ffffff;
+  padding: 15px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: auto;
+}
+.button-container-calendar button {
+  cursor: pointer;
+  display: inline-block;
+  zoom: 1;
+  background: #00a2b7;
+  color: #fff;
+  border: 1px solid #0aa2b5;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+.table-calendar {
+  border-collapse: collapse;
+  width: 100%;
+}
+.table-calendar th,
+.table-calendar td{
+  padding: 10px;
+  border: 1px solid #e2e2e2;
+  text-align: center;
+  vertical-align: top;
+}
+/*現在の日付*/
+.date-picker.selected {
+  font-weight: bold;
+  color: #fff;
+  background: #99ee99;
+}
+.date-picker.selected span {
+  border-bottom: 2px solid currentColor;
+}
+
+/* 日曜 */
+.date-picker:nth-child(1) {
+color: red;
+}
+/* 土曜 */
+.date-picker:nth-child(7) {
+color: blue;
+}
+#monthAndYear {
+  text-align: center;
+  margin-top: 0;
+}
+.button-container-calendar {
+  position: relative;
+  margin-bottom: 1em;
+  overflow: hidden;
+  clear: both;
+}
+#previous {
+  float: left;
+}
+#next {
+  float: right;
+}
+.footer-container-calendar {
+  margin-top: 1em;
+  border-top: 1px solid #dadada;
+  padding: 10px 0;
+}
+.footer-container-calendar select {
+  cursor: pointer;
+  display: inline-block;
+  zoom: 1;
+  background: #ffffff;
+  color: #454545;
+  border: 1px solid #bfc5c5;
+  border-radius: 3px;
+  padding: 5px 1em;
+}
+
+/* イベントがある日の旗のスタイル */
+
+.event-flag {
+  position: relative;
+}
+
+.event-flag {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  border-bottom:12px solid #FF5252;
+  border-right:5px solid transparent;
+  border-left:5px solid transparent;
+  transform:rotate(90deg);
+  
+}
+
+.date-picker {
+  position: relative;
+  content: attr(data-day-of-week);
+
+}
+
+.date-picker::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background:#559FEA;
+
+}
+
+.date-picker::after {
+  content: attr(data-day-of-week);
+  position: absolute;
+  top:10px;
+  left:2px;
+  width: 8px;
+  height:12px;
+  background:#559FEA;
+  font-size:14px;
+  color:black;
+}
+
