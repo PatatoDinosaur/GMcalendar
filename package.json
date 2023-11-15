@@ -1,7 +1,7 @@
 {
     "private": true,
     "scripts": {
-        "start":"node server.js",
+        "start":"php artisan serve --port=8080",
         "dev": "vite",
         "build": "vite build",
         "heroku-postbuild":"npm run build"
