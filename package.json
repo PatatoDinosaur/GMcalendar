@@ -1,7 +1,6 @@
 {
     "private": true,
     "scripts": {
-        "start":"php artisan serve",
         "dev": "vite",
         "build": "vite build",
         "heroku-postbuild":"npm run build"
