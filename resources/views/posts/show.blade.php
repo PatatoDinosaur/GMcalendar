@@ -169,7 +169,7 @@
                         <form action="/posts/{{ $post->id }}/delete" id="form_{{ $post->id}}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button class="delete" type="button" onclick="deletePost({{$post->id}})">グループを削除</button>
+                            <button class="delete" type="button" onclick="deletePost({{$post->id}})">グループ削除</button>
                         </form>
                     </div>
                     @endif

@@ -9,7 +9,9 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\EventController; 
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/dashboard', function (Post $post) {
     return view('dashboard')->with(['posts' => $post->getPaginateByLimit(8)]);
@@ -17,7 +19,7 @@ Route::get('/dashboard', function (Post $post) {
 
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
-    Route::get('/', 'index')->name('index');
+    Route::get('/index', 'index')->name('index');
     Route::post('/posts/create', 'store')->name('store');
     Route::get('/posts/create', 'create')->name('create');
     Route::get('/posts/{post}', 'show')->name('show');
@@ -29,8 +31,6 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::get('/posts/{post}/invite', 'invite')->name('invite');
     Route::post('/posts/{post}/invite', 'register')->name('register');
 });
-
-Route::get('/categories/{category}', [CategoryController::class,'index'])->middleware("auth");
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

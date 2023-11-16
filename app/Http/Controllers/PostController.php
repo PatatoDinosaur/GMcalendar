@@ -62,8 +62,8 @@ class PostController extends Controller
             'max' => ':attribute は :max 文字以内で入力してください',
         ]);        
         $input = $request['post'];
-        $post->fill($input)->save();
         $post->master_id = Auth::user()->id;
+        $post->fill($input)->save();
         Auth::user()->posts()->attach([$post->id]);//所属するグループを新規登録
         return redirect('/posts/' . $post->id);
     }
@@ -77,7 +77,7 @@ class PostController extends Controller
     public function quit(Post $post)
     {
         Auth::user()->posts()->detach($post->id);
-        return redirect('/');
+        return redirect('/dashboard');
     }
     
     public function edit(Post $post)
@@ -95,7 +95,7 @@ class PostController extends Controller
     public function delete(Post $post)
     {
         $post->delete();
-        return redirect('/');
+        return redirect('/dashboard');
     }
     
     public function create()
